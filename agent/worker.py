@@ -43,8 +43,6 @@ from livekit.agents import (  # noqa: E402
 from livekit import rtc  # noqa: E402
 from livekit.plugins import anthropic, cartesia, google, groq, openai, silero  # noqa: E402
 
-# Imported up front: the turn model runs in LiveKit's inference process, which is set up at worker start.
-from livekit.plugins.turn_detector.multilingual import MultilingualModel  # noqa: E402
 
 from app.authenticity import analyze_answer  # noqa: E402
 from app.config import get_settings  # noqa: E402
@@ -57,6 +55,10 @@ from .dtln import SAMPLE_RATE as DTLN_RATE, DTLNFilter  # noqa: E402
 
 log = logging.getLogger("hiremind.agent")
 settings = get_settings()
+# Importing the turn model registers LiveKit's inference process (~1.2 GB RAM) at worker start,
+# so import it only when it is enabled. TURN_DETECTOR=false falls back to VAD end-of-turn.
+if settings.turn_detector:
+    from livekit.plugins.turn_detector.multilingual import MultilingualModel  # noqa: E402
 # Local prod mode otherwise pre-warms ~4 idle processes (~15s before accepting jobs).
 server = AgentServer(num_idle_processes=1, initialize_process_timeout=45.0)
 
