@@ -1,0 +1,14 @@
+.git
+.gitignore
+.gcloudignore
+.env
+.env.*
+.venv
+tests
+deploy
+**/__pycache__
+**/*.py[cod]
+.pytest_cache
+.ruff_cache
+.mypy_cache
+.DS_Store

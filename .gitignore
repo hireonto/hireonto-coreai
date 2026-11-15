@@ -1,0 +1,17 @@
+# Secrets: never commit. .env.example holds dummy values only.
+.env
+.env.*
+!.env.example
+deploy/gcp/*.env.yaml
+!deploy/gcp/*.env.example.yaml
+deploy/gcp/config.sh
+
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.cache/
+.DS_Store
+deploy/gcp/.last-image
